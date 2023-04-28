@@ -1,5 +1,7 @@
 const numberDiv = document.getElementById("number");
-const resultDiv = document.getElementById("result")
+const resultDiv = document.getElementById("result");
+const startButton = document.getElementById("start-button");
+numberDiv.style.marginBottom = "1.5em";
 numberDiv.style.fontSize = "64px";
 resultDiv.style.fontSize = "32px";
 
@@ -21,40 +23,6 @@ function getRandomNumber(numOfRandom, min, max){
     }
 }
 
-const fiveRandom = getRandomNumber(5, 1, 50);
-console.log("Numeri generati random: " + fiveRandom);
-for(let i=0; i < fiveRandom.length; i++){
-    numberDiv.innerHTML += `${fiveRandom[i]} &nbsp &nbsp`;
-}
-
-setTimeout(function(){
-    numberDiv.style.display = "none";    
-}, 4 * 1000);
-
-const userNumber = [];
-setTimeout(function(){
-    console.log("DOPO 3 SECONDI");
-    for( let i=0; i < 5; i++){
-        userNumber.push(parseInt(prompt("Inserisci i numeri in ordine uno per uno")));
-    }
-    console.log("Numeri inseriti: " + userNumber);
-    const result = compareArray(fiveRandom, userNumber);
-    console.log("Numeri uguali: " + result);
-    const guessedElementNumber = result.length;
-    console.log("Numero di numeri indovinati: " + guessedElementNumber);
-    if(guessedElementNumber == 0){
-        alert("Riprova, non hai indovinato nessun numero");
-    }else{
-        // alert(`Hai indovinato ${guessedElementNumber} `)
-        resultDiv.innerHTML = `Hai indovinato ${guessedElementNumber} numeri e sono: `;
-        for( let i=0; i < guessedElementNumber; i++){
-            resultDiv.innerHTML += `${result[i]} &nbsp`
-        }
-    }
-    numberDiv.style.display = "block";    
-
-}, 5 * 1000);
-
 function compareArray(array1, array2){
     const sameElement = [];
     for(let i=0; i < array1.length; i++){39
@@ -66,3 +34,74 @@ function compareArray(array1, array2){
 
     return sameElement;
 }
+
+function showFiveRandomNumber(array, HTMLelement){
+    for(let i=0; i < array.length; i++){
+        HTMLelement.innerHTML += `${array[i]} &nbsp &nbsp`;
+    }
+    console.log("Showed random number");
+}
+
+function displayNone(HTMLelement){
+    HTMLelement.style.display = "none";    
+}
+
+function displayBlock(HTMLelement){
+    HTMLelement.style.display = "block";    
+}
+
+function getFiveUserNumber(){
+    const array = [];
+    for( let i=0; i < 5; i++){
+        array.push(parseInt(prompt("Inserisci i numeri in ordine uno per uno")));
+    }
+    return array;
+}
+
+function getResultArray(array1, array2){
+    const result = compareArray(array1, array2);
+    
+    return result;
+}
+
+function showResult(array, HTMLelement){
+    if(array.length == 0){
+        HTMLelement.innerHTML = "Riprova, non hai indovinato nessun numero";
+    }else if(array.length == 5){
+        HTMLelement.innerHTML = "Complimenti, hai indovinato tutti i numeri!!!";
+    }    else{
+        // alert(`Hai indovinato ${guessedElementNumber} `)
+        HTMLelement.innerHTML = `Hai indovinato ${array.length} numeri e sono: `;
+        for( let i=0; i < array.length; i++){
+            HTMLelement.innerHTML += `${array[i]} &nbsp`
+        }
+    }
+}
+
+function resetInnerHTML(HTMLelement){
+    HTMLelement.innerHTML = "";
+}
+
+startButton.addEventListener("click", function(){
+    resetInnerHTML(numberDiv);
+    resetInnerHTML(resultDiv);
+
+    const fiveRandomNumber = getRandomNumber(5, 1, 50);
+    console.log("Five random number: " + fiveRandomNumber);
+    
+    showFiveRandomNumber(fiveRandomNumber, numberDiv);
+    
+    setTimeout(function(){
+        displayNone(numberDiv);
+    }, 2.9 * 1000);
+    
+
+    setTimeout(function(){
+        console.log("DOPO 4 SECONDI");
+        const userNumber = getFiveUserNumber();
+        const result = getResultArray(fiveRandomNumber, userNumber);
+        showResult(result, resultDiv);
+        displayBlock(numberDiv);
+    }, 3 * 1000)
+
+})

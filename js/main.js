@@ -64,10 +64,10 @@ function getResultArray(array1, array2){
     return result;
 }
 
-function showResult(array, HTMLelement){
+function showResult(array, maxArrayLength, HTMLelement){
     if(array.length == 0){
         HTMLelement.innerHTML = "Riprova, non hai indovinato nessun numero";
-    }else if(array.length == 5){
+    }else if(array.length == maxArrayLength){
         HTMLelement.innerHTML = "Complimenti, hai indovinato tutti i numeri!!!";
     }    else{
         // alert(`Hai indovinato ${guessedElementNumber} `)
@@ -100,7 +100,7 @@ startButton.addEventListener("click", function(){
         console.log("DOPO 4 SECONDI");
         const userNumber = getFiveUserNumber();
         const result = getResultArray(fiveRandomNumber, userNumber);
-        showResult(result, resultDiv);
+        showResult(result, 5, resultDiv);
         displayBlock(numberDiv);
     }, 3 * 1000)
 

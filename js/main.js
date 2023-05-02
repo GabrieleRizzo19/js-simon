@@ -1,9 +1,6 @@
 const numberDiv = document.getElementById("number"); // DIV FOR SHOW RANDOM NUMBER
 const resultDiv = document.getElementById("result"); // DIV FOR SHOW RESULT
 const startButton = document.getElementById("start-button"); // START BUTTON
-numberDiv.style.marginBottom = "1.5em";
-numberDiv.style.fontSize = "64px";  // STYLING DIV
-resultDiv.style.fontSize = "32px";
 
 // LOGIC FUNCTION
 
@@ -77,11 +74,23 @@ function resetInnerHTML(HTMLelement){
     HTMLelement.innerHTML = "";
 }
 
+function setFontSize(HTMLelement, value){
+    HTMLelement.style.fontSize = value;
+    console.log("Font size " + HTMLelement + "è" + HTMLelement.style.fontSize.value);
+}
+
+function setMarginBottom(HTMLelement, value){
+    HTMLelement.style.marginBottom = value;
+}
+
 // EVENT LISTENER ON  START BUTTON
 startButton.addEventListener("click", function(){
     
     resetInnerHTML(numberDiv);
     resetInnerHTML(resultDiv);
+    setFontSize(numberDiv, "64px");
+    setFontSize(resultDiv, "32px");
+    setMarginBottom(numberDiv, "1.5rem");
 
     const numberForPlay = parseInt(prompt("Con quanti numeri vuoi giocare?"));
     const timeOfShow = parseInt(prompt("Quanti secondi devono restare visibili i numeri?"));
